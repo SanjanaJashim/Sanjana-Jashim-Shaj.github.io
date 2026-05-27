@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjana Jashim.github.io</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ebad0f295e.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg-white: #ffffff;
+            --bg-soft: #fcfcfc;
+            --dark-grey: #1a1a1a;
+            --charcoal: #333333;
+            --ghost-white: #f1f1f1;
+            --text-main: #000000;
+            --text-muted: #555555;
+            --border: #dddddd;
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-white);
+            color: var(--text-main);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            padding: 1.2rem;
+            z-index: 1000;
+            border-bottom: 2px solid var(--dark-grey);
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 5px 15px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--dark-grey);
+        }
+
+        header {
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        header p {
+            color: var(--charcoal);
+            font-size: 0.9rem;
+            letter-spacing: 6px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-top: 2px solid var(--dark-grey);
+            padding-top: 10px;
+        }
+
+        section {
+            padding: 90px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--dark-grey);
+            margin-bottom: 3rem;
+            border-left: 8px solid var(--dark-grey);
+            padding-left: 15px;
+        }
+
+        /* Toolkit & Achievement Grid */
+        .toolkit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .tool-category,
+        .card {
+            background: var(--bg-soft);
+            padding: 35px 25px;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .tool-category:hover,
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--dark-grey);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            background: white;
+        }
+
+        .tool-category h3,
+        .card h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: var(--dark-grey);
+            font-weight: 800;
+        }
+
+        .tool-list,
+        .list-style {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tool-list li,
+        .list-style li {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tool-list li::before,
+        .list-style li::before {
+            content: "▪";
+            color: var(--dark-grey);
+            margin-right: 10px;
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            border-left: 4px solid var(--dark-grey);
+            padding-left: 30px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -41px;
+            top: 4px;
+            width: 18px;
+            height: 18px;
+            background: var(--dark-grey);
+            border-radius: 0;
+        }
+
+        .time-date {
+            font-size: 0.85rem;
+            color: var(--charcoal);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .time-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        .time-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .bullet-list {
+            padding-left: 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .bullet-list li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* Blog Section */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .blog-card {
+            background: var(--bg-soft);
+            padding: 30px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .blog-card:hover {
+            border-color: var(--dark-grey);
+            transform: scale(1.02);
+        }
+
+        .blog-card h3 {
+            margin: 15px 0;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: 800;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--dark-grey);
+            color: var(--dark-grey);
+        }
+
+        /* Resume Section */
+        .resume-section {
+            text-align: center;
+            padding: 60px;
+            background: var(--dark-grey);
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: white;
+            color: black;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--ghost-white);
+            transform: translateY(-3px);
+        }
+
+        .contact-link {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 900;
+            letter-spacing: -1px;
+            border-bottom: 6px solid var(--dark-grey);
+            transition: 0.3s;
+        }
+
+        .contact-link:hover {
+            background: var(--dark-grey);
+            color: white;
+        }
+
+        footer {
+            padding: 80px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="Cherishing Moments">Cherishing Moments</a>
+        <a href="#toolkit">Toolkit</a>
+        <a href="#experience">Experience</a>
+        <a href="#blog">Blog</a>
+        <a href="#resume">Resume</a>
+
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Sanjana jashim </h1>
+            <p>ROS Developer|ML Enthusiast</p>
+        </header>
+
+        <section id="about">
+            <h2>About</h2>
+            <!-- BIO -->
+            <div class="about-bio" style="flex:1; min-width:300px;">
+                <p style="font-size: 1.3rem; line-height: 1.6;">
+                    I am an EEE student.I am curious to explore Power Electronics ,Signal Processing ,Iot.</br>   
+                     Beyond academics, I take travel photography seriously 📸. I find joy in reading novels 📚,
+                    walking
+                    through nature 🌿, and unwinding with tea ☕, coffee, or lemonade 🍃.<br><br>
+                    I wasn’t a strong student in my childhood, but I believe growth is a journey 🌱.
+                </p>
+            </div>
+
+            <div class="Toolkit">
+                <h2>Engineering Toolkit</h2>
+                <div class="toolkit-grid">
+                    <div class="tool-category">
+                        <h3>Embedded Systems</h3>
+                        <ul class="tool-list">
+                            <li>Embedded C</li>
+                            <li>ESP32 & Arduino</li>
+                            <li>STM32 Development</li>
+                        </ul>
+                    </div>
+                    <div class="tool-category">
+                        <h3>PCB & Simulation</h3>
+                        <ul class="tool-list">
+                            <li>EasyEDA</li>
+                            <li>MATLAB</li>
+                            <li>Simulink</li>
+                        </ul>
+                    </div>
+                    <div class="tool-category">
+                        <h3>Mechanical Design</h3>
+                        <ul class="tool-list">
+                            <li>Fusion 360</li>
+                            <li>3D Prototyping</li>
+                        </ul>
+                    </div>
+                    <div class="tool-category">
+                        <h3>Software & Data</h3>
+                        <ul class="tool-list">
+                            <li>Python</li>
+                            <li>SQL</li>
+                        </ul>
+                    </div>
+                </div>
+        </section>
+
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="time-date">NOV 2024 — MARCH 2025</span>
+                    <h3 class="time-title">Electrical Team Intern | UIU Mars Rover Team</h3>
+                   
+                        
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="time-date">JAN 2024 — SEP 2024</span>
+                    <h3 class="time-title">Executive | UIU Electrical & Electronics Club</h3>
+
+                    </p>
+                </div>
+            </div>
+        </section>
+
+                
+
+      
+                    >
+            </div>
+        </section>
+
+       
+
+       
+        <section id="resume">
+            <h2>Resume</h2>
+            <div class="resume-section">
+                <p style="margin-bottom: 30px; font-weight: 500; font-size: 1.1rem;">ACCESS TECHNICAL CV AND PROJECT
+                    DOCUMENTATION</p>
+                <a href="resume.pdf" target="_blank" class="btn">Download PDF</a>
+            </div>
+        </section>
+
+        <section id="contact" style="border:none; text-align: center;">
+            <h2>Contact</h2>
+            <a href="sanjanaxasheem@outlook.com" class="contact-link">GET IN TOUCH</a>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2025 [Sanjana Jashim] • 
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        const config = {
+            particleCount: 85,
+            darkColor: 'rgba(26, 26, 26, 0.9)',
+            lightColor: 'rgba(220, 220, 220, 0.5)',
+            lineColor: 'rgba(26, 26, 26, 0.2)',
+            particleSize: 3,
+            velocity: 0.5
+        };
+
+        window.onresize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * config.velocity;
+                this.vy = (Math.random() - 0.5) * config.velocity;
+                this.color = Math.random() > 0.5 ? config.darkColor : config.lightColor;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.rect(this.x, this.y, config.particleSize, config.particleSize);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for (let i = 0; i < config.particleCount; i++) particles.push(new Particle());
+            animate();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+                    if (d < 170) {
+                        ctx.strokeStyle = config.lineColor;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        init();
+    </script>
+
+</body>
+
+</html>
